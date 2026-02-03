@@ -11,7 +11,7 @@ Ensure the `X-API-Key` is set and belongs to the team that owns the vault.
 
 ## Network issues
 For GIT/FILE_ARCHIVE sources, verify the URL is reachable by The Code Registry's platform at analysis time.
-If IP addresses need to be whitelisted so these code sources can be accessed, we have this information from our knowledgease base
+If IP addresses need to be whitelisted so these code sources can be accessed, we have this information from our knowledge base:
 
 ### Whitelisting The Code Registry's IP addresses in your GIT provider
 Some GIT repository providers - for example GitHub Enterprise - allow you to whitelist a specific set of IP addresses that are allowed to access your repositories.

@@ -1,24 +1,57 @@
-# The Code Registry MCP Server
+<div align="center">
+  <img src="assets/banner.png" alt="The Code Registry" />
+  
+  # The Code Registry MCP Server
+  
+  <p>
+    <strong>Enterprise-grade code intelligence for AI assistants</strong>
+  </p>
+  
+  <p>
+    <a href="#quick-start">Quick Start</a> •
+    <a href="#features">Features</a> •
+    <a href="#use-cases">Use Cases</a> •
+    <a href="#documentation">Documentation</a> •
+    <a href="https://thecoderegistry.com">Website</a>
+  </p>
 
-Enterprise-grade code intelligence for business leaders by The Code Registry. Now with a native, fully-featured MCP server for AI agents. Analyze codebases for due diligence, tech debt, security vulnerabilities, code quality and more - directly from Claude, ChatGPT and other MCP clients.
+  [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
+  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+  [![Support](https://img.shields.io/badge/Support-Email-orange)](mailto:support@thecoderegistry.com)
+</div>
+
+---
+
+Enterprise-grade code intelligence for business leaders by The Code Registry. Now with a native, fully-featured MCP server for AI agents. Analyze codebases for due diligence, tech debt, security vulnerabilities, code quality and more - directly from Claude Desktop, Claude API, and other MCP-compatible clients.
 
 ## What is this?
 
-This is a hosted MCP server that lets AI agents create accounts, manage projects, analyze code, and retrieve analysis results without leaving the conversation. It is designed for business leaders (M&A, CTOs, VCs, board members) who need fast, reliable code insights and clean reports.
+This is a hosted MCP server that lets AI agents create accounts, manage projects, analyze code, and retrieve analysis results without leaving the conversation. It is designed for business leaders (M&A professionals, CTOs, VCs, board members) who need fast, reliable code insights and clean reports.
 
 Any codebase can be analyzed and results can be ready in as quick as 30 minutes depending on code volume. PDF reports containing the results are automatically emailed to the user after analysis is complete, and as their AI agent you can retrieve the results as soon as they are ready, to show in your conversation with the user or to generate graphs/charts/reports with etc.
 
+## What is MCP?
+
+The Model Context Protocol (MCP) is an open standard that enables AI assistants to securely connect to data sources and tools. Learn more at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
+
+## Prerequisites
+
+- An MCP-compatible client (Claude Desktop, Claude Code, or custom implementation)
+- For LOCAL_AGENT: Docker installed on your machine
+- For GIT sources: Git repository URL with appropriate access
+- Basic understanding of code analysis and software metrics
+
 ## Features
 
-- Zero setup: agents can create accounts automatically, all you need is their email address, name and team/company name.
-- Privacy-first: Using the LOCAL_AGENT code source type keeps code on your machine and only sends an anonymouse zip file of results.
-- Comprehensive analysis: security, complexity, languages, file types, code quality, licenses, tech debt and more.
-- Executive-friendly reports: PDf reports automatically emailed to the user, ready for non-technical stakeholders.
-- Multiple sources: local repos or folders of code, GIT repositories, or file archives.
+- **Zero setup**: agents can create accounts automatically, all you need is their email address, name and team/company name
+- **Privacy-first**: Using the LOCAL_AGENT code source type keeps code on your machine and only sends an anonymous zip file of results
+- **Comprehensive analysis**: security, complexity, languages, file types, code quality, licenses, tech debt and more
+- **Executive-friendly reports**: PDF reports automatically emailed to the user, ready for non-technical stakeholders
+- **Multiple sources**: local repos or folders of code, GIT repositories, or file archives
 
 ## Quick Start
 
-1) Create account
+### 1) Create account
 
 ```json
 {
@@ -33,7 +66,9 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 }
 ```
 
-2) Create project
+**Response:** Returns `api_key`, `team_id`, and `user_id` - store the API key securely and include it in all subsequent requests via `X-API-Key` header.
+
+### 2) Create project
 
 ```json
 {
@@ -47,7 +82,7 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 }
 ```
 
-3) Create code vault (recommended code source type: LOCAL_AGENT)
+### 3) Create code vault (recommended: LOCAL_AGENT)
 
 ```json
 {
@@ -62,7 +97,9 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 }
 ```
 
-4) Poll for results
+**Response:** Includes `next_steps.commands` with Docker commands to run locally.
+
+### 4) Poll for results
 
 ```json
 {
@@ -72,7 +109,9 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 }
 ```
 
-5) Fetch report URLs
+**Note:** Results are typically ready in 30 minutes to a few hours, depending on codebase size. Poll with exponential backoff.
+
+### 5) Fetch report URLs
 
 ```json
 {
@@ -82,38 +121,89 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 }
 ```
 
+**Note:** PDF reports are generated after analysis completes and are automatically emailed to the user.
+
 ## Use Cases
 
-- M&A due diligence (see `examples/use-cases/due-diligence.md`)
-- Tech debt analysis (see `examples/use-cases/tech-debt-analysis.md`)
-- Security audit (see `examples/use-cases/security-audit.md`)
-- Portfolio monitoring (see `examples/use-cases/portfolio-monitoring.md`)
+### M&A Due Diligence
+Quickly assess acquisition targets for technical risk, security vulnerabilities, and architecture concerns. See `examples/use-cases/due-diligence.md`.
+
+### Tech Debt Analysis
+Monitor technical debt across your portfolio and track improvements over time. See `examples/use-cases/tech-debt-analysis.md`.
+
+### Security Audit
+Identify security vulnerabilities and compliance issues before they become problems. See `examples/use-cases/security-audit.md`.
+
+### Portfolio Monitoring
+Track engineering metrics across multiple companies in your investment portfolio. See `examples/use-cases/portfolio-monitoring.md`.
 
 ## Configuration
 
 See `integrations/` for client-specific setup:
 
-- Claude Desktop
-- Claude API
-- Cline (VS Code)
-- Cursor
-- Custom agents
+- **Claude Desktop** - Desktop app configuration
+- **Claude API** - API integration with Python/TypeScript examples
+- **Cline** - VS Code extension setup
+- **Cursor** - Cursor IDE integration
+- **Custom agents** - Build your own MCP client
 
 ## Pricing
 
-- Free: Up to 200k lines of code
-- Registered: $2 per 1,000 lines/month
-- Contact The Code Registry for custom pricing and offers - https://thecoderegistry.com/
+- **Free Tier**: Up to 200,000 lines of code
+- **Registered Users**: $2 per 1,000 lines of code per month
+- **Enterprise**: Contact us at [thecoderegistry.com](https://thecoderegistry.com/) for custom pricing and volume discounts
+
+All tiers include:
+- Unlimited projects and code vaults
+- Full feature access
+- PDF report generation
+- Email notifications
 
 ## Documentation
 
-- Getting started: `docs/getting-started.md`
-- Authentication: `docs/authentication.md`
-- Troubleshooting: `docs/troubleshooting.md`
-- API reference: `docs/api-reference.md`
-- Architecture: `docs/architecture.md`
+- **Getting started**: `docs/getting-started.md` - Step-by-step walkthrough
+- **API reference**: `docs/api-reference.md` - Complete action reference
+- **Authentication**: `docs/authentication.md` - API key management
+- **Troubleshooting**: `docs/troubleshooting.md` - Common issues and solutions
+- **Architecture**: `docs/architecture.md` - System design overview
+
+## Why Use The Code Registry MCP Server?
+
+**For M&A Professionals:**
+- Fast technical due diligence (hours, not weeks)
+- No manual code review needed
+- Executive-friendly PDF reports
+- Objective technical risk assessment
+
+**For CTOs & Technical Leaders:**
+- Monitor technical debt across portfolio
+- Track security vulnerabilities
+- Understand codebase complexity
+- Make data-driven technical decisions
+
+**For VCs & Board Members:**
+- Assess technical risk in portfolio companies
+- Track engineering metrics over time
+- Get objective technical insights
+- Support portfolio company CTOs
 
 ## Support
 
-- Email: support@thecoderegistry.com
-- Issues: `.github/ISSUE_TEMPLATE/`
+- **Email**: support@thecoderegistry.com
+- **Issues**: Use GitHub Issues for bug reports and feature requests
+- **Website**: [thecoderegistry.com](https://thecoderegistry.com/)
+
+## License
+
+See [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+<div align="center">
+  <p>Built with ❤️ by <a href="https://thecoderegistry.com">The Code Registry</a></p>
+  <p>The World's first code intelligence platform built for business leaders</p>
+</div>
