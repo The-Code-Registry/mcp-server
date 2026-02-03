@@ -5,9 +5,13 @@ BASE_URL = "https://integrator.app.thecoderegistry.com/api/ai/router"
 API_KEY = "your-api-key"
 
 payload = {
-    "type": "mcp",
-    "action": "list_projects",
-    "data": {}
+    "jsonrpc": "2.0",
+    "method": "tools/call",
+    "params": {
+        "name": "list_projects",
+        "arguments": {},
+    },
+    "id": 1,
 }
 
 req = urllib.request.Request(
@@ -21,4 +25,6 @@ req = urllib.request.Request(
 )
 
 with urllib.request.urlopen(req) as resp:
-    print(resp.read().decode("utf-8"))
+    body = json.loads(resp.read().decode("utf-8"))
+    result_text = body["result"]["content"][0]["text"]
+    print(json.loads(result_text))

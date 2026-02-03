@@ -6,9 +6,15 @@ This project exposes an MCP server for creating and analyzing code vaults via Th
 - Web app: `https://app.thecoderegistry.com`
 - MCP server: `https://integrator.app.thecoderegistry.com` (POST to `/api/ai/router`)
 
+## Discovery
+Use `tools/list` to discover available MCP tools and their input schemas.
+Use `resources/list` and `resources/read` for documentation, workflows, and examples.
+Use `prompts/list` and `prompts/get` for curated prompt templates.
+
 ## Authentication
 - `create_account` does not require an API key.
 - All other MCP actions require `X-API-Key` using the key returned by `create_account`.
+- If an MCP client cannot set custom headers, include `api_key` in the tool `arguments`. Header auth is preferred when available.
 
 ## Recommended flow (LOCAL_AGENT)
 Use `LOCAL_AGENT` as the code source type for "code vaults" / repositories when possible. The agent can run the analysis command locally. It's a single command that sends The Code Registry an anonymous zip file of code analysis data containing NO source code.
@@ -16,41 +22,53 @@ Use `LOCAL_AGENT` as the code source type for "code vaults" / repositories when 
 1) Create account
 ```json
 {
-  "type": "mcp",
-  "action": "create_account",
-  "data": {
-    "email": "user@example.com",
-    "name": "User Name",
-    "team_name": "Example Org",
-    "integrator_id": "agent-name"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_account",
+    "arguments": {
+      "email": "user@example.com",
+      "name": "User Name",
+      "team_name": "Example Org",
+      "integrator_id": "agent-name"
+    }
+  },
+  "id": 1
 }
 ```
 
 2) Create project
 ```json
 {
-  "type": "mcp",
-  "action": "create_project",
-  "data": {
-    "user_id": "<user_id>",
-    "name": "My Project",
-    "description": "Optional"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_project",
+    "arguments": {
+      "user_id": "<user_id>",
+      "name": "My Project",
+      "description": "Optional"
+    }
+  },
+  "id": 2
 }
 ```
 
 3) Create code vault (LOCAL_AGENT)
 ```json
 {
-  "type": "mcp",
-  "action": "create-code-vault",
-  "data": {
-    "project_id": "<project_id>",
-    "user_id": "<user_id>",
-    "name": "My Code Vault",
-    "source_type": "LOCAL_AGENT"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create-code-vault",
+    "arguments": {
+      "project_id": "<project_id>",
+      "user_id": "<user_id>",
+      "name": "My Code Vault",
+      "source_type": "LOCAL_AGENT"
+    }
+  },
+  "id": 3
 }
 ```
 Response includes `next_steps.commands`. Run one of those commands on the machine with the code.
@@ -60,18 +78,22 @@ With GIT or FILE_ARCHIVE as the code source type, The Code Registry platform wil
 
 ```json
 {
-  "type": "mcp",
-  "action": "create-code-vault",
-  "data": {
-    "project_id": "<project_id>",
-    "user_id": "<user_id>",
-    "name": "Repo Vault",
-    "source_type": "GIT",
-    "source_url": "https://github.com/org/repo.git",
-    "username": "optional",
-    "password": "optional",
-    "branch": "optional"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create-code-vault",
+    "arguments": {
+      "project_id": "<project_id>",
+      "user_id": "<user_id>",
+      "name": "Repo Vault",
+      "source_type": "GIT",
+      "source_url": "https://github.com/org/repo.git",
+      "username": "optional",
+      "password": "optional",
+      "branch": "optional"
+    }
+  },
+  "id": 4
 }
 ```
 
@@ -81,27 +103,39 @@ Analysis is async. Poll until ready.
 Summary:
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-summary",
-  "data": { "vault_id": "<vault_id>" }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-summary",
+    "arguments": { "vault_id": "<vault_id>" }
+  },
+  "id": 5
 }
 ```
 
 Full results:
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-results",
-  "data": { "vault_id": "<vault_id>" }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-results",
+    "arguments": { "vault_id": "<vault_id>" }
+  },
+  "id": 6
 }
 ```
 
 Reports:
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-reports",
-  "data": { "vault_id": "<vault_id>" }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-reports",
+    "arguments": { "vault_id": "<vault_id>" }
+  },
+  "id": 7
 }
 ```
 

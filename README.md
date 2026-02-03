@@ -34,6 +34,16 @@ Any codebase can be analyzed and results can be ready in as quick as 30 minutes 
 
 The Model Context Protocol (MCP) is an open standard that enables AI assistants to securely connect to data sources and tools. Learn more at [modelcontextprotocol.io](https://modelcontextprotocol.io/).
 
+## MCP Protocol Support
+
+This server supports the full MCP JSON-RPC 2.0 flow, including:
+
+- `initialize`
+- `tools/list`
+- `tools/call`
+- `resources/list` and `resources/read`
+- `prompts/list` and `prompts/get`
+
 ## Prerequisites
 
 - An MCP-compatible client (Claude Desktop, Claude Code, or custom implementation)
@@ -51,34 +61,56 @@ The Model Context Protocol (MCP) is an open standard that enables AI assistants 
 
 ## Quick Start
 
+### 0) Initialize (recommended)
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2024-11-05",
+    "capabilities": {}
+  },
+  "id": 1
+}
+```
+
 ### 1) Create account
 
 ```json
 {
-  "type": "mcp",
-  "action": "create_account",
-  "data": {
-    "email": "user@example.com",
-    "name": "User Name",
-    "team_name": "Example Org",
-    "integrator_id": "agent-name"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_account",
+    "arguments": {
+      "email": "user@example.com",
+      "name": "User Name",
+      "team_name": "Example Org",
+      "integrator_id": "agent-name"
+    }
+  },
+  "id": 2
 }
 ```
 
-**Response:** Returns `api_key`, `team_id`, and `user_id` - store the API key securely and include it in all subsequent requests via `X-API-Key` header.
+**Response:** Returns `api_key`, `team_id`, and `user_id` (inside `result.content[0].text` as JSON) - store the API key securely and include it in all subsequent requests via `X-API-Key` header.
 
 ### 2) Create project
 
 ```json
 {
-  "type": "mcp",
-  "action": "create_project",
-  "data": {
-    "user_id": "<user_id>",
-    "name": "My Project",
-    "description": "Optional"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_project",
+    "arguments": {
+      "user_id": "<user_id>",
+      "name": "My Project",
+      "description": "Optional"
+    }
+  },
+  "id": 3
 }
 ```
 
@@ -86,14 +118,18 @@ The Model Context Protocol (MCP) is an open standard that enables AI assistants 
 
 ```json
 {
-  "type": "mcp",
-  "action": "create-code-vault",
-  "data": {
-    "project_id": "<project_id>",
-    "user_id": "<user_id>",
-    "name": "My Code Vault",
-    "source_type": "LOCAL_AGENT"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create-code-vault",
+    "arguments": {
+      "project_id": "<project_id>",
+      "user_id": "<user_id>",
+      "name": "My Code Vault",
+      "source_type": "LOCAL_AGENT"
+    }
+  },
+  "id": 4
 }
 ```
 
@@ -103,9 +139,13 @@ The Model Context Protocol (MCP) is an open standard that enables AI assistants 
 
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-results",
-  "data": { "vault_id": "<vault_id>" }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-results",
+    "arguments": { "vault_id": "<vault_id>" }
+  },
+  "id": 5
 }
 ```
 
@@ -115,9 +155,13 @@ The Model Context Protocol (MCP) is an open standard that enables AI assistants 
 
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-reports",
-  "data": { "vault_id": "<vault_id>" }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-reports",
+    "arguments": { "vault_id": "<vault_id>" }
+  },
+  "id": 6
 }
 ```
 

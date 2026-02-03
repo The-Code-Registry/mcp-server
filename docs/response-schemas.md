@@ -1,6 +1,26 @@
 # Response Schemas
 
-This document provides detailed response schemas for all MCP actions.
+This document provides detailed response schemas for all MCP actions. Request examples use MCP JSON-RPC (`tools/call`).
+
+## JSON-RPC wrapper
+
+When using MCP JSON-RPC (`tools/call`), the tool response is returned as a JSON string inside `result.content[0].text`. Parse that JSON to get the schemas below.
+
+Example wrapper:
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"status\":\"created\",\"team\":{\"id\":\"...\"}}"
+      }
+    ]
+  },
+  "id": 1
+}
+```
 
 ## create_account
 
@@ -9,14 +29,18 @@ Creates a new team account and returns credentials.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "create_account",
-  "data": {
-    "email": "user@example.com",
-    "name": "John Doe",
-    "team_name": "Acme Corp",
-    "integrator_id": "claude-desktop"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_account",
+    "arguments": {
+      "email": "user@example.com",
+      "name": "John Doe",
+      "team_name": "Acme Corp",
+      "integrator_id": "claude-desktop"
+    }
+  },
+  "id": 1
 }
 ```
 
@@ -53,8 +77,13 @@ Returns team and user information for the authenticated API key.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get_account"
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get_account",
+    "arguments": {}
+  },
+  "id": 2
 }
 ```
 
@@ -82,13 +111,17 @@ Creates a new project within the team.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "create_project",
-  "data": {
-    "user_id": "660e8400-e29b-41d4-a716-446655440000",
-    "name": "Q4 Due Diligence",
-    "description": "Tech DD for AcmeCorp acquisition"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create_project",
+    "arguments": {
+      "user_id": "660e8400-e29b-41d4-a716-446655440000",
+      "name": "Q4 Due Diligence",
+      "description": "Tech DD for AcmeCorp acquisition"
+    }
+  },
+  "id": 3
 }
 ```
 
@@ -114,8 +147,13 @@ Lists all projects for the authenticated team.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "list_projects"
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "list_projects",
+    "arguments": {}
+  },
+  "id": 4
 }
 ```
 
@@ -152,11 +190,15 @@ Returns details for a specific project.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get_project",
-  "data": {
-    "project_id": "770e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get_project",
+    "arguments": {
+      "project_id": "770e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 5
 }
 ```
 
@@ -184,11 +226,15 @@ Deletes a project and all its code vaults.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "delete_project",
-  "data": {
-    "project_id": "770e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "delete_project",
+    "arguments": {
+      "project_id": "770e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 6
 }
 ```
 
@@ -211,14 +257,18 @@ Creates a new code vault and initiates analysis.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "create-code-vault",
-  "data": {
-    "project_id": "770e8400-e29b-41d4-a716-446655440000",
-    "user_id": "660e8400-e29b-41d4-a716-446655440000",
-    "name": "AcmeCorp Main App",
-    "source_type": "LOCAL_AGENT"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create-code-vault",
+    "arguments": {
+      "project_id": "770e8400-e29b-41d4-a716-446655440000",
+      "user_id": "660e8400-e29b-41d4-a716-446655440000",
+      "name": "AcmeCorp Main App",
+      "source_type": "LOCAL_AGENT"
+    }
+  },
+  "id": 7
 }
 ```
 
@@ -247,16 +297,20 @@ Creates a new code vault and initiates analysis.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "create-code-vault",
-  "data": {
-    "project_id": "770e8400-e29b-41d4-a716-446655440000",
-    "user_id": "660e8400-e29b-41d4-a716-446655440000",
-    "name": "AcmeCorp Main App",
-    "source_type": "GIT",
-    "source_url": "https://github.com/acmecorp/main-app.git",
-    "branch": "main"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "create-code-vault",
+    "arguments": {
+      "project_id": "770e8400-e29b-41d4-a716-446655440000",
+      "user_id": "660e8400-e29b-41d4-a716-446655440000",
+      "name": "AcmeCorp Main App",
+      "source_type": "GIT",
+      "source_url": "https://github.com/acmecorp/main-app.git",
+      "branch": "main"
+    }
+  },
+  "id": 8
 }
 ```
 
@@ -282,11 +336,15 @@ Lists all code vaults within a project.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "list_vaults",
-  "data": {
-    "project_id": "770e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "list_vaults",
+    "arguments": {
+      "project_id": "770e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 9
 }
 ```
 
@@ -325,11 +383,15 @@ Returns metadata for a specific code vault.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get_vault",
-  "data": {
-    "vault_id": "990e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get_vault",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 10
 }
 ```
 
@@ -359,11 +421,15 @@ Returns high-level status and version information.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-summary",
-  "data": {
-    "vault_id": "990e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-summary",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 11
 }
 ```
 
@@ -408,11 +474,15 @@ Returns complete analysis results including all facets and insights.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-results",
-  "data": {
-    "vault_id": "990e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-results",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 12
 }
 ```
 
@@ -491,11 +561,15 @@ Returns URLs to downloadable PDF reports.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "get-code-vault-reports",
-  "data": {
-    "vault_id": "990e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-vault-reports",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 13
 }
 ```
 
@@ -561,11 +635,15 @@ Deletes a code vault and all its analysis data.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "delete-code-vault",
-  "data": {
-    "vault_id": "990e8400-e29b-41d4-a716-446655440000"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "delete-code-vault",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 14
 }
 ```
 
@@ -587,11 +665,15 @@ Generates a new API key for the team (invalidates the old one).
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "rotate_api_key",
-  "data": {
-    "integrator_id": "claude-desktop"
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "rotate_api_key",
+    "arguments": {
+      "integrator_id": "claude-desktop"
+    }
+  },
+  "id": 15
 }
 ```
 
@@ -617,11 +699,15 @@ Deletes the team account and all associated data.
 **Request:**
 ```json
 {
-  "type": "mcp",
-  "action": "delete_account",
-  "data": {
-    "confirm": true
-  }
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "delete_account",
+    "arguments": {
+      "confirm": true
+    }
+  },
+  "id": 16
 }
 ```
 

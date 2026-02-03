@@ -14,6 +14,8 @@ For all other actions, include the API key in the request header:
 X-API-Key: <api_key>
 ```
 
+If your MCP client cannot set custom headers, pass the key inside tool arguments as `api_key`. Header auth is preferred when available.
+
 ## Web app access
 Users can view analysis results in the web app at:
 https://app.thecoderegistry.com

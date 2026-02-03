@@ -1,9 +1,13 @@
 const https = require('https')
 
 const data = JSON.stringify({
-  type: 'mcp',
-  action: 'list_projects',
-  data: {}
+  jsonrpc: '2.0',
+  method: 'tools/call',
+  params: {
+    name: 'list_projects',
+    arguments: {}
+  },
+  id: 1
 })
 
 const req = https.request(
@@ -19,7 +23,11 @@ const req = https.request(
   res => {
     let body = ''
     res.on('data', chunk => (body += chunk))
-    res.on('end', () => console.log(body))
+    res.on('end', () => {
+      const payload = JSON.parse(body)
+      const text = payload.result.content[0].text
+      console.log(JSON.parse(text))
+    })
   }
 )
 
