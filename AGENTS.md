@@ -148,6 +148,14 @@ Recommended retry logic:
 - If `status` is `processing`, wait and retry.
 - Use exponential backoff (5s → 10s → 20s → 40s, max 60s).
 
+## Re-analyze an existing code vault
+
+1) Call `reanalyze-code-vault`
+2) Run the LOCAL_AGENT again if the original source type was `LOCAL_AGENT`
+3) Poll the same summary/results/report tools as usual
+
+**Important:** Once re-analysis starts, `get-code-vault-summary`, `get-code-vault-results`, and `get-code-vault-reports` return the **new** version only. Previous version data is no longer accessible via these tools.
+
 ## Cold starts
 Our MCP server host may scale to zero; the first request can time out. Retry with backoff.
 

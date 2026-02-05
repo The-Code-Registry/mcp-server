@@ -52,6 +52,15 @@ At this stage the code analysis can be retrieved and presented to the user, but 
 Call `get-code-vault-reports` to retrieve snapshot and comparison report URLs. Once a full report PDF URL is returned in the response, that report is ready.
 Comparison PDF reports will never be generated for the first analysis of a codebase (version 1.0.0)
 
+## Re-analyze an existing code vault
+To re-run analysis on an existing code vault:
+
+1) Call `reanalyze-code-vault`
+2) Run the LOCAL_AGENT again if the original source type was `LOCAL_AGENT`
+3) Poll `get-code-vault-summary`, `get-code-vault-results`, and `get-code-vault-reports` as usual
+
+**Important:** Once re-analysis starts, those tools return the **new** version only. Previous version data is no longer accessible via these tools.
+
 ## Next steps
 - See `docs/api-reference.md` for all MCP actions.
 - See `docs/troubleshooting.md` for common issues.

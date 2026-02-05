@@ -175,6 +175,16 @@ This server supports the full MCP JSON-RPC 2.0 flow, including:
 
 **Note:** PDF reports are generated after analysis completes and are automatically emailed to the user.
 
+### Re-analyze an existing code vault
+
+To re-run analysis on an existing code vault:
+
+1) Call `reanalyze-code-vault`
+2) Run the LOCAL_AGENT again if the original source type was `LOCAL_AGENT`
+3) Poll the same summary/results/report tools as usual
+
+**Important:** Once re-analysis starts, `get-code-vault-summary`, `get-code-vault-results`, and `get-code-vault-reports` return the **new** version only. Previous version data is no longer accessible via these tools.
+
 ## Use Cases
 
 ### M&A Due Diligence

@@ -464,6 +464,37 @@ Creates a new code vault and initiates analysis.
 
 ---
 
+### reanalyze-code-vault
+Re-runs analysis for an existing code vault. This increments the vault version (for example, `1.0.0` → `1.0.1`) and starts a new analysis run using the original source type.
+
+**Authentication:** Required
+
+**Request Fields:**
+- `vault_id` (string, required) - Vault ID to re-analyze
+
+**Response:** Vault version info. For LOCAL_AGENT vaults, includes `next_steps` with Docker commands.
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "reanalyze-code-vault",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 15
+}
+```
+
+**Notes:**
+- If the original source type is `LOCAL_AGENT`, run the local agent again using the returned commands.
+- After re-analysis starts, `get-code-vault-summary`, `get-code-vault-results`, and `get-code-vault-reports` return the **new** version only. Previous version data is no longer accessible via these tools.
+
+---
+
 ### list_vaults
 Lists all code vaults within a project.
 

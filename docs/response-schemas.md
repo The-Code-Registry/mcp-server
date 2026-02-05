@@ -329,6 +329,49 @@ Creates a new code vault and initiates analysis.
 
 ---
 
+## reanalyze-code-vault
+
+Re-runs analysis for an existing code vault and creates a new version.
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "reanalyze-code-vault",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 9
+}
+```
+
+**Response (LOCAL_AGENT example):**
+```json
+{
+  "vault": {
+    "id": "990e8400-e29b-41d4-a716-446655440000",
+    "project_id": "770e8400-e29b-41d4-a716-446655440000",
+    "version_id": "bb0e8400-e29b-41d4-a716-446655440000",
+    "name": "AcmeCorp Main App",
+    "created": "2025-02-10T09:20:00Z"
+  },
+  "next_steps": {
+    "instructions": "Run one of the following commands from the root of your codebase:",
+    "commands": {
+      "linux_macos": "docker run -it --rm --pull always -v \"$(pwd):/code\" codeintelligenceplatform/local-code-agent:latest --web-endpoint https://app.thecoderegistry.com --project-id 770e8400-e29b-41d4-a716-446655440000 --code-vault-id 990e8400-e29b-41d4-a716-446655440000",
+      "windows": "docker run -it --rm --pull always -v \"%cd%:/code\" codeintelligenceplatform/local-code-agent:latest --web-endpoint https://app.thecoderegistry.com --project-id 770e8400-e29b-41d4-a716-446655440000 --code-vault-id 990e8400-e29b-41d4-a716-446655440000"
+    }
+  }
+}
+```
+
+**Note:** After re-analysis starts, `get-code-vault-summary`, `get-code-vault-results`, and `get-code-vault-reports` return the **new** version only. Previous version data is no longer accessible via these tools.
+
+---
+
 ## list_vaults
 
 Lists all code vaults within a project.
