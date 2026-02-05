@@ -16,6 +16,7 @@
   </p>
 
   [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
+  [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-Published-brightgreen)](https://registry.modelcontextprotocol.io/)
   [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
   [![Support](https://img.shields.io/badge/Support-Email-orange)](mailto:support@thecoderegistry.com)
 </div>
