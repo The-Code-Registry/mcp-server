@@ -59,6 +59,11 @@ This server supports the full MCP JSON-RPC 2.0 flow, including:
 - For GIT sources: Git repository URL with appropriate access
 - Basic understanding of code analysis and software metrics
 
+## Existing accounts
+
+If the user already has a Code Registry account, they can generate an API key in the web app and use it directly via the
+`X-API-Key` header (preferred). If the MCP client cannot set custom headers, pass `api_key` in tool arguments instead.
+
 ## Features
 
 - **Zero setup**: agents can create accounts automatically, all you need is their email address, name and team/company name
@@ -226,6 +231,7 @@ All tiers include:
 - **Getting started**: `docs/getting-started.md` - Step-by-step walkthrough
 - **API reference**: `docs/api-reference.md` - Complete action reference
 - **Authentication**: `docs/authentication.md` - API key management
+- **Facets glossary**: `docs/facets.md` - Definitions for analysis facets in results
 - **Troubleshooting**: `docs/troubleshooting.md` - Common issues and solutions
 - **Architecture**: `docs/architecture.md` - System design overview
 

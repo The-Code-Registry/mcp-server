@@ -651,6 +651,7 @@ Returns complete analysis results including all facets and AI insights.
 - Only available when status is `ready`
 - Results can be large (100KB+) for complex codebases
 - AI insights include strengths, concerns, and actionable recommendations
+- See `docs/facets.md` for definitions of each facet key
 
 ---
 

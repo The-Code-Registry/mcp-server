@@ -14,6 +14,7 @@ Use `prompts/list` and `prompts/get` for curated prompt templates.
 ## Authentication
 - `create_account` does not require an API key.
 - All other MCP actions require `X-API-Key` using the key returned by `create_account`.
+- Existing users can generate an API key in the web app and provide it directly via `X-API-Key`.
 - If an MCP client cannot set custom headers, include `api_key` in the tool `arguments`. Header auth is preferred when available.
 
 ## Recommended flow (LOCAL_AGENT)
