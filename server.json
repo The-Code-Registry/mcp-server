@@ -1,0 +1,16 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.hellosg/coderegistry",
+  "description": "Enterprise code intelligence for M&A, security audits, and tech debt. Hosted server with 200k free.",
+  "repository": {
+    "url": "https://github.com/The-Code-Registry/mcp-server",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://integrator.app.thecoderegistry.com/api/ai/router"
+    }
+  ]
+}
