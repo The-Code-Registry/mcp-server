@@ -25,12 +25,18 @@
 
 Enterprise-grade code intelligence for business leaders by The Code Registry. Now with a native, fully-featured MCP server for AI agents. Analyze codebases for due diligence, tech debt, security vulnerabilities, code quality and more - directly from Claude Desktop, Claude API, and other MCP-compatible clients.
 
-## MCP Server URL
+## Install as an MCP server
 
 Use this URL when configuring any MCP-compatible client:
 
 ```
 https://integrator.app.thecoderegistry.com/api/ai/router
+```
+
+## Install as an agent skill
+
+```bash
+npx skills add The-Code-Registry/mcp-server
 ```
 
 ## What is this?
