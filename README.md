@@ -223,6 +223,23 @@ See `integrations/` for client-specific setup:
 - **Cursor** - Cursor IDE integration
 - **Custom agents** - Build your own MCP client
 
+## Agent Skill (Optional)
+
+This repository includes a reusable agent skill at `skills/code-registry` that teaches agents when and how to use this MCP server with the correct lifecycle and completion logic.
+
+- Skill entry point: `skills/code-registry/SKILL.md`
+- Lifecycle details: `skills/code-registry/references/vault-lifecycle.md`
+- Interpretation guidance: `skills/code-registry/references/result-interpretation.md`
+- Polling helper script: `skills/code-registry/scripts/poll_vault_status.py`
+
+Install the `code-registry` folder into your agent's skills directory, then run your agent normally:
+
+- Codex: `$CODEX_HOME/skills/`
+- Claude Code: `~/.claude/skills/`
+- Cursor project-local: `.cursor/skills/`
+
+See `skills/README.md` for usage details and script examples.
+
 ## Pricing
 
 - **Free Tier**: Up to 200,000 lines of code
@@ -243,6 +260,7 @@ All tiers include:
 - **Facets glossary**: `docs/facets.md` - Definitions for analysis facets in results
 - **Troubleshooting**: `docs/troubleshooting.md` - Common issues and solutions
 - **Architecture**: `docs/architecture.md` - System design overview
+- **Skills guide**: `skills/README.md` - Install and use the Code Registry agent skill
 
 ## Why Use The Code Registry MCP Server?
 
