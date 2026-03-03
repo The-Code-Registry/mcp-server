@@ -35,9 +35,33 @@ https://integrator.app.thecoderegistry.com/api/ai/router
 
 ## Install as an agent skill
 
+Some MCP clients and editors (including Cursor) require MCP server configuration before the skill can use tools.
+
+### Cursor MCP server configuration (example)
+
+```json
+{
+  "mcpServers": {
+    "coderegistry": {
+      "url": "https://integrator.app.thecoderegistry.com/api/ai/router"
+    }
+  }
+}
+```
+
+Use this JSON in your Cursor MCP settings, or copy the same example from `integrations/cursor/config.json`.
+
+Then install the skill:
+
 ```bash
 npx skills add The-Code-Registry/mcp-server
 ```
+
+The `code-registry` skill gives your client AI agent extra context and instructions for using this MCP server correctly, including:
+
+- the recommended tool flow (`create_account` -> `create_project` -> `create-code-vault` -> polling)
+- completion rules for first analysis vs re-analysis (snapshot vs comparison reports)
+- retry/backoff behavior and LOCAL_AGENT follow-up guidance
 
 ## What is this?
 
@@ -231,7 +255,7 @@ See `integrations/` for client-specific setup:
 
 ## Agent Skill (Optional)
 
-This repository includes a reusable agent skill at `skills/code-registry` that teaches agents when and how to use this MCP server with the correct lifecycle and completion logic.
+This repository includes a reusable agent skill at `skills/code-registry` that gives agents additional context and concrete operating instructions for this MCP server (tool order, polling lifecycle, completion rules, and result interpretation).
 
 - Skill entry point: `skills/code-registry/SKILL.md`
 - Lifecycle details: `skills/code-registry/references/vault-lifecycle.md`

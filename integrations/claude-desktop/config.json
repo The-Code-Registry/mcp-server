@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "codecregistry": {
+    "coderegistry": {
       "command": "npx",
       "args": [
         "-y",

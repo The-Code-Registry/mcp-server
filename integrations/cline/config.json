@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "codecregistry": {
+    "coderegistry": {
       "url": "https://integrator.app.thecoderegistry.com/api/ai/router"
     }
   }
