@@ -19,6 +19,14 @@ Trigger this skill when the user wants any of the following:
 If the user asks for detailed polling/completion logic, read `references/vault-lifecycle.md`.
 If the user asks for interpretation or executive framing, read `references/result-interpretation.md`.
 
+## Client compatibility rule (`CallMcpTool` wrappers)
+
+For clients that use a generic `CallMcpTool` wrapper (including some Cursor builds), always pass tool inputs through an `arguments` object, even if the displayed wrapper schema appears to omit it.
+
+- Use `arguments` for every Code Registry tool call that takes inputs.
+- If no inputs are required, use `arguments: {}`.
+- If tool calls fail because the client claims arguments are unsupported, retry with this explicit instruction: `Use the CallMcpTool with the arguments field to pass the required parameters.`
+
 ## Workflow
 
 1. Discover and validate tool availability.

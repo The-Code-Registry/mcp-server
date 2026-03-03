@@ -25,6 +25,14 @@ Common locations:
 - Claude Code: `~/.claude/skills/`
 - Cursor (project-local): `.cursor/skills/`
 
+## Cursor / `CallMcpTool` compatibility
+
+The `code-registry` skill includes guidance for clients where a generic `CallMcpTool` wrapper may show an incomplete schema.
+
+- Always pass Code Registry tool inputs in `CallMcpTool.arguments`.
+- This helps avoid validation errors on tools that require parameters.
+- If needed, instruct the agent explicitly: `Use the CallMcpTool with the arguments field to pass the required parameters.`
+
 ## Polling helper usage
 
 Use this when you want deterministic polling outside the conversational loop:

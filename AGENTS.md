@@ -11,6 +11,24 @@ Use `tools/list` to discover available MCP tools and their input schemas.
 Use `resources/list` and `resources/read` for documentation, workflows, and examples.
 Use `prompts/list` and `prompts/get` for curated prompt templates.
 
+## Client compatibility note (Cursor / CallMcpTool wrappers)
+- Known issue in some clients (notably some Cursor builds): the displayed `CallMcpTool` schema may omit `arguments` even though runtime forwarding supports it.
+- For The Code Registry tools, always pass required tool inputs via `CallMcpTool.arguments`.
+- If a tool has no required inputs, use `arguments: {}` for consistency.
+- Example wrapper call shape:
+```json
+{
+  "server": "coderegistry",
+  "toolName": "create-code-vault",
+  "arguments": {
+    "project_id": "<project_id>",
+    "user_id": "<user_id>",
+    "name": "My Code Vault",
+    "source_type": "LOCAL_AGENT"
+  }
+}
+```
+
 ## Authentication
 - `create_account` does not require an API key.
 - All other MCP actions require `X-API-Key` using the key returned by `create_account`.

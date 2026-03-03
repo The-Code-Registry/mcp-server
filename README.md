@@ -51,6 +51,29 @@ Some MCP clients and editors (including Cursor) require MCP server configuration
 
 Use this JSON in your Cursor MCP settings, or copy the same example from `integrations/cursor/config.json`.
 
+### Cursor / `CallMcpTool` known limitation and workaround
+
+Some Cursor builds (and other clients that wrap MCP tools behind a generic `CallMcpTool`) may show an incomplete tool schema that omits `arguments`, even though the runtime accepts it.
+
+For The Code Registry tools, always pass required parameters in the `arguments` field when using `CallMcpTool`.
+
+Prompt hint that often fixes this behavior:
+
+`Use the CallMcpTool with the arguments field to pass the required parameters.`
+
+Example wrapper call shape:
+
+```json
+{
+  "server": "coderegistry",
+  "toolName": "create_project",
+  "arguments": {
+    "user_id": "<user_id>",
+    "name": "My Project"
+  }
+}
+```
+
 Then install the skill:
 
 ```bash

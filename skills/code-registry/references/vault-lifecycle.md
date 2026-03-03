@@ -6,6 +6,7 @@ Use this file when implementing or validating end-to-end code-vault workflows.
 
 - Optional but recommended: `initialize`
 - Optional: `tools/list` to confirm currently available tools and schemas
+- For `CallMcpTool`-style wrappers (for example, some Cursor builds), always send MCP tool inputs in `arguments` even if the displayed wrapper schema omits that field
 
 ## 2. Authentication
 
