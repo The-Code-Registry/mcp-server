@@ -46,7 +46,8 @@ The MCP server returns `next_steps.commands` with Docker commands.
 
 ## Step 4: Poll for results
 Use `get-code-vault-summary` and `get-code-vault-results` until status is `ready`.
-At this stage the code analysis can be retrieved and presented to the user, but the PDF reports may not have been generated yet.
+At this stage analysis data can be retrieved and presented to the user, but the PDF reports may not have been generated yet.
+Free-tier accounts receive summary-level MCP output; paid plans receive extended/full result detail.
 
 ## Step 5: Poll to fetch report URLs
 Call `get-code-vault-reports` to retrieve snapshot and comparison report URLs. Once a full report PDF URL is returned in the response, that report is ready.

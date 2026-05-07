@@ -122,7 +122,7 @@ If the user already has a Code Registry account, they can generate an API key in
 
 - **Zero setup**: agents can create accounts automatically, all you need is their email address, name and team/company name
 - **Privacy-first**: Using the LOCAL_AGENT code source type keeps code on your machine and only sends an anonymous zip file of results
-- **Comprehensive analysis**: security, complexity, languages, file types, code quality, licenses, tech debt and more
+- **Plan-aware analysis**: free accounts can sync code and retrieve summary-level results; paid plans unlock full findings data and premium outputs
 - **Executive-friendly reports**: PDF reports automatically emailed to the user, ready for non-technical stakeholders
 - **Multiple sources**: local repos or folders of code, GIT repositories, or file archives
 
@@ -295,15 +295,14 @@ See `skills/README.md` for usage details and script examples.
 
 ## Pricing
 
-- **Free Tier**: Up to 200,000 lines of code
-- **Registered Users**: $2 per 1,000 lines of code per month
-- **Enterprise**: Contact us at [thecoderegistry.com](https://thecoderegistry.com/) for custom pricing and volume discounts
+- **Free Tier**: No total LOC cap. Includes account creation, project/vault management, code sync, and summary-level MCP outputs.
+- **Paid Plans**: Unlock full analysis data and premium features such as verification badges, public verification pages, Code Score (out of 1,000), and other advanced capabilities.
+- **Enterprise**: Contact us at [thecoderegistry.com](https://thecoderegistry.com/) for custom pricing and volume discounts.
 
-All tiers include:
-- Unlimited projects and code vaults
-- Full feature access
-- PDF report generation
-- Email notifications
+Available on all plans:
+- Account and API key management
+- Project and code vault lifecycle tools
+- LOCAL_AGENT, GIT, and FILE_ARCHIVE ingestion
 
 ## Documentation
 

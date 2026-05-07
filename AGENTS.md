@@ -35,6 +35,12 @@ Use `prompts/list` and `prompts/get` for curated prompt templates.
 - Existing users can generate an API key in the web app and provide it directly via `X-API-Key`.
 - If an MCP client cannot set custom headers, include `api_key` in the tool `arguments`. Header auth is preferred when available.
 
+## Plan behavior
+- Free tier is not limited by total lines of code.
+- Free tier should still support registration, project/vault lifecycle, code sync, and summary-level analysis retrieval.
+- Paid plans unlock extended functionality and richer payloads (for example full findings, verification badges/public verification pages, and Code Score out of 1,000).
+- If a feature is plan-restricted, return the service error and direct users to upgrade in the web app.
+
 ## Recommended flow (LOCAL_AGENT)
 Use `LOCAL_AGENT` as the code source type for "code vaults" / repositories when possible. The agent can run the analysis command locally. It's a single command that sends The Code Registry an anonymous zip file of code analysis data containing NO source code.
 
@@ -132,7 +138,7 @@ Summary:
 }
 ```
 
-Full results:
+Results (payload depth depends on plan):
 ```json
 {
   "jsonrpc": "2.0",

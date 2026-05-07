@@ -617,20 +617,17 @@ Returns high-level status and version information.
 ---
 
 ### get-code-vault-results
-Returns complete analysis results including all facets and AI insights.
+Returns analysis results for a vault. Response detail is plan-dependent.
 
 **Authentication:** Required
 
 **Request Fields:**
 - `vault_id` (string, required) - Vault ID to retrieve results from
 
-**Response:** Complete analysis data including:
+**Response:** Analysis data including:
 - Summary statistics (lines, files, languages)
-- Security vulnerabilities
-- Complexity metrics
-- Quality scores
-- License compliance
-- AI-generated insights and recommendations
+- High-level analysis metrics
+- Additional facet-level detail for paid plans (for example detailed findings, expanded insights, and premium scoring outputs when enabled)
 
 **Example:**
 ```json
@@ -649,8 +646,8 @@ Returns complete analysis results including all facets and AI insights.
 
 **Notes:**
 - Only available when status is `ready`
-- Results can be large (100KB+) for complex codebases
-- AI insights include strengths, concerns, and actionable recommendations
+- Free accounts can still sync/analyze code and retrieve summary-level data
+- Paid plans unlock more detailed result payloads and premium features
 - See `docs/facets.md` for definitions of each facet key
 
 ---
@@ -717,7 +714,7 @@ All errors follow this format:
 | `VALIDATION_ERROR` | 400 | Missing or invalid request fields | Check request format and required fields |
 | `INVALID_API_KEY` | 401 | API key is missing, invalid, or expired | Verify X-API-Key header and key validity |
 | `FORBIDDEN` | 403 | Not authorized to access this resource | Ensure API key belongs to the resource's team |
-| `LIMIT_EXCEEDED` | 403 | Free tier limit exceeded | Upgrade account or contact support |
+| `LIMIT_EXCEEDED` | 403 | Plan restriction or usage limit reached | Upgrade account or contact support |
 | `NOT_FOUND` | 404 | Resource not found | Verify resource ID and team ownership |
 | `ACCOUNT_EXISTS` | 409 | Account with email already exists | Use existing account or different email |
 | `CONFIG_ERROR` | 500 | Server misconfiguration | Contact support |
@@ -780,7 +777,7 @@ Current rate limits (subject to change):
 
 ### 3. Implement Proper Polling
 - Use exponential backoff
-- Check `get-code-vault-summary` before fetching full results
+- Check `get-code-vault-summary` before fetching `get-code-vault-results`
 - Don't poll more frequently than every 30 seconds
 - Stop polling when status is `ready` or `failed`
 
@@ -793,7 +790,7 @@ Current rate limits (subject to change):
 ### 5. Present Results Progressively
 - Don't wait for PDF reports to show users results
 - Use `get-code-vault-results` as soon as status is `ready`
-- Present AI insights and key metrics first
+- Start with summary metrics; include deeper findings when available on the user's plan
 - Provide PDF links when available
 
 ---

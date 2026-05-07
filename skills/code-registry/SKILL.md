@@ -55,7 +55,7 @@ For clients that use a generic `CallMcpTool` wrapper (including some Cursor buil
 
 6. Present outputs for the intended audience.
 - Start with decision-grade summary: risk level, confidence, immediate actions.
-- Then provide supporting technical details from facets and findings.
+- Then provide supporting technical details from facets and findings when available on the user's plan (free tier may be summary-only).
 
 ## Re-analysis workflow
 

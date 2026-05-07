@@ -58,3 +58,4 @@ Use this structure for consistent outputs:
 - Make clear when a metric is directional vs deterministic
 - Separate observed facts from inferred conclusions
 - For re-analysis, compare version-over-version deltas explicitly
+- If the account is on a summary-level/free plan, avoid claiming access to full issue lists or per-file findings unless they are explicitly present in the payload
