@@ -512,7 +512,7 @@ Returns high-level status and version information.
 
 ## get-code-vault-results
 
-Returns complete analysis results including all facets and insights.
+Returns analysis results for a vault. Response detail is plan-dependent.
 
 **Request:**
 ```json
@@ -529,7 +529,38 @@ Returns complete analysis results including all facets and insights.
 }
 ```
 
-**Response:**
+**Response - Free Tier (summary-level example):**
+```json
+{
+  "results": {
+    "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+    "version": "1.0.0",
+    "status": "ready",
+    "summary": {
+      "total_lines": 125000,
+      "total_files": 842,
+      "languages": {
+        "JavaScript": 65000,
+        "TypeScript": 35000,
+        "Python": 15000,
+        "CSS": 10000
+      }
+    },
+    "security": {
+      "critical": 2,
+      "high": 8,
+      "medium": 23,
+      "low": 45
+    },
+    "complexity": {
+      "average_complexity": 8.5,
+      "high_complexity_files": 12
+    }
+  }
+}
+```
+
+**Response - Paid Plan (extended example):**
 ```json
 {
   "results": {
@@ -568,6 +599,7 @@ Returns complete analysis results including all facets and insights.
     },
     "quality": {
       "code_quality_score": 7.2,
+      "code_score": 742,
       "test_coverage": 68,
       "documentation_coverage": 45
     },
@@ -594,6 +626,10 @@ Returns complete analysis results including all facets and insights.
   }
 }
 ```
+
+**Notes:**
+- Free tier is not LOC-capped; summary-level outputs remain available.
+- Paid plans can return extended fields, detailed findings, and premium scoring/verification data.
 
 ---
 
@@ -830,12 +866,11 @@ All errors follow this format:
 ```json
 {
   "error": {
-    "message": "Team has exceeded the free tier line limit. Please upgrade to continue.",
+    "message": "This feature is not available on your current plan. Please upgrade to continue.",
     "code": "LIMIT_EXCEEDED",
     "status": 403,
     "details": {
-      "current_lines": 250000,
-      "limit": 200000,
+      "feature": "full_results",
       "upgrade_url": "https://app.thecoderegistry.com"
     }
   }

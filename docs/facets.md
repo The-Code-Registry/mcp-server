@@ -1,7 +1,8 @@
 # Facet Glossary
 
-The `get-code-vault-results` response returns a `facets` object keyed by display slugs.
-Each facet object also includes a `slug` field with the raw internal slug used internally in The Code Registry's system.
+The `get-code-vault-results` response can include a `facets` object keyed by display slugs.
+Facet availability and detail depth are plan-dependent. Free tier generally returns summary-level outputs, while paid plans can return richer facet detail.
+When present, each facet object also includes a `slug` field with the raw internal slug used internally in The Code Registry's system.
 
 ## Facets
 
