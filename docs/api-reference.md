@@ -646,7 +646,7 @@ Returns analysis results for a vault. Response detail is plan-dependent.
 
 **Notes:**
 - Only available when status is `ready`
-- Free accounts can still sync/analyze code and retrieve summary-level data
+- Free accounts can sync/analyze code and retrieve summary-level data (up to 100,000 total lines of code)
 - Paid plans unlock more detailed result payloads and premium features
 - See `docs/facets.md` for definitions of each facet key
 

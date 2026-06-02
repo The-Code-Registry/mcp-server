@@ -295,7 +295,7 @@ See `skills/README.md` for usage details and script examples.
 
 ## Pricing
 
-- **Free Tier**: No total LOC cap. Includes account creation, project/vault management, code sync, and summary-level MCP outputs.
+- **Free Tier**: Up to 100,000 lines of code. Includes account creation, project/vault management, code sync, and summary-level MCP outputs.
 - **Paid Plans**: Unlock full analysis data and premium features such as verification badges, public verification pages, Code Score (out of 1,000), and other advanced capabilities.
 - **Enterprise**: Contact us at [thecoderegistry.com](https://thecoderegistry.com/) for custom pricing and volume discounts.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- Free tier now limited to 100,000 total lines of code across all vaults (previously uncapped)
+
 ## [1.0.0] - 2026-02-02
 
 ### Added

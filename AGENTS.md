@@ -36,7 +36,7 @@ Use `prompts/list` and `prompts/get` for curated prompt templates.
 - If an MCP client cannot set custom headers, include `api_key` in the tool `arguments`. Header auth is preferred when available.
 
 ## Plan behavior
-- Free tier is not limited by total lines of code.
+- Free tier is limited to 100,000 total lines of code across all vaults.
 - Free tier should still support registration, project/vault lifecycle, code sync, and summary-level analysis retrieval.
 - Paid plans unlock extended functionality and richer payloads (for example full findings, verification badges/public verification pages, and Code Score out of 1,000).
 - If a feature is plan-restricted, return the service error and direct users to upgrade in the web app.
