@@ -628,7 +628,7 @@ Returns analysis results for a vault. Response detail is plan-dependent.
 ```
 
 **Notes:**
-- Free tier is not LOC-capped; summary-level outputs remain available.
+- Free tier is limited to 100,000 total lines of code; summary-level outputs remain available within that limit.
 - Paid plans can return extended fields, detailed findings, and premium scoring/verification data.
 
 ---
@@ -863,6 +863,8 @@ All errors follow this format:
 ```
 
 #### LIMIT_EXCEEDED (403)
+
+Plan feature restriction:
 ```json
 {
   "error": {
@@ -871,6 +873,22 @@ All errors follow this format:
     "status": 403,
     "details": {
       "feature": "full_results",
+      "upgrade_url": "https://app.thecoderegistry.com"
+    }
+  }
+}
+```
+
+Free tier LOC cap exceeded:
+```json
+{
+  "error": {
+    "message": "Your free tier limit of 100,000 lines of code has been reached. Please upgrade to continue.",
+    "code": "LIMIT_EXCEEDED",
+    "status": 403,
+    "details": {
+      "feature": "loc_limit",
+      "limit": 100000,
       "upgrade_url": "https://app.thecoderegistry.com"
     }
   }
