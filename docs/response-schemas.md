@@ -804,6 +804,346 @@ Deletes the team account and all associated data.
 
 ---
 
+---
+
+## Full Data Access Tools
+
+These tools require a paid plan. Verification-only (VerifyYourCode) plans are not included. Each tool takes exactly one of `project_id` or `vault_id`. When called with `project_id`, per-item results include `vault_name` rather than `vault_id`.
+
+**Pagination** (`limit` / `offset`) applies to all tools that support filtering. Default `limit` is `50`, maximum is `200`. Default `offset` is `0`.
+
+---
+
+## get-security-issues
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-security-issues",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "severity": ["ERROR"],
+      "limit": 1
+    }
+  },
+  "id": 20
+}
+```
+
+**Response:**
+```json
+{
+  "issues": [
+    {
+      "id": "1859c7c2-d04c-4e68-9378-bf0724c5aec8",
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "check_id": "python.lang.security.audit.subprocess-shell-true.subprocess-shell-true",
+      "file": "function/activity_analyse.py",
+      "line": 173,
+      "severity": "ERROR",
+      "issue_type": "code",
+      "message": "Found 'subprocess' function 'check_output' with 'shell=True'...",
+      "code_snippet": "        output = subprocess.check_output(codeclimate_cmd, shell=True)\n",
+      "created_at": "2024-08-06T10:27:31",
+      "updated_at": "2024-08-06T10:27:31",
+      "triage": {
+        "status": "first_viewed",
+        "external_id": null,
+        "external_ref": null,
+        "external_url": null
+      },
+      "tags": []
+    }
+  ],
+  "total": 47,
+  "limit": 1,
+  "offset": 0
+}
+```
+
+When called with `project_id`, each issue includes `vault_name` (string) in place of `vault_id`.
+
+---
+
+## get-code-smells
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-smells",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "limit": 50
+    }
+  },
+  "id": 21
+}
+```
+
+**Response:**
+```json
+{
+  "issues": [...],
+  "total": 84,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+Each item in `issues` follows the same shape as `get-security-issues` (id, vault_id, check_id, file, line, severity, issue_type, message, code_snippet, created_at, updated_at, triage, tags).
+
+---
+
+## get-git-history
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-git-history",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "date_from": "2024-01-01",
+      "limit": 50
+    }
+  },
+  "id": 22
+}
+```
+
+**Response:**
+```json
+{
+  "commits": [
+    {
+      "hash": "a1b2c3d4e5f6...",
+      "author": "Jane Smith",
+      "email": "jane@example.com",
+      "date": "2024-08-06T10:27:31Z",
+      "message": "Fix subprocess shell injection"
+    }
+  ],
+  "total": 312,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+---
+
+## get-contributors
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-contributors",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 23
+}
+```
+
+**Response:**
+```json
+{
+  "contributors": [
+    {
+      "author": "Jane Smith",
+      "email": "jane@example.com",
+      "commit_count": 147,
+      "first_commit": "2023-01-10T09:00:00Z",
+      "last_commit": "2024-08-06T10:27:31Z"
+    }
+  ],
+  "total": 8,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+---
+
+## get-components
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-components",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "only_outdated": true
+    }
+  },
+  "id": 24
+}
+```
+
+**Response:**
+```json
+{
+  "components": [
+    {
+      "name": "lodash",
+      "vendor": "OpenJS Foundation",
+      "version": "4.17.15",
+      "latest_version": "4.17.21",
+      "outdated": true,
+      "url": "https://lodash.com"
+    }
+  ],
+  "total": 23,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+---
+
+## get-code-iq-automated-queries
+
+**Request — all analyses:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-iq-automated-queries",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 25
+}
+```
+
+**Response:**
+```json
+{
+  "analyses": [
+    {
+      "key": "project_architecture",
+      "label": "Project Architecture",
+      "description": null,
+      "report_content": "...",
+      "summary": "...",
+      "diagrams": [],
+      "findings": [],
+      "recommendations": [],
+      "risks": [],
+      "highlights": [],
+      "unknowns": [],
+      "assumptions": [],
+      "online_context": [],
+      "online_sources": [],
+      "confidence": []
+    }
+  ]
+}
+```
+
+**Important:** `analysis_key: "code_score"` is not valid for this tool. Requesting it returns a `404 NOT_FOUND` error pointing to `get-the-code-score`. Use `get-the-code-score` for The Code Score.
+
+---
+
+## get-the-code-score
+
+**Request:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-the-code-score",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 27
+}
+```
+
+**Response — score available:**
+```json
+{
+  "code_score": {
+    "description": "A 1,000 point score for security, technical debt, and code quality.",
+    "executive_summary": "Code Score 504/1000.\nSecurity 214/400, Code Quality 69/200, Dependencies 221/400...",
+    "sections": {
+      "security": {
+        "score": 214,
+        "max_score": 400,
+        "data_status": "READY",
+        "total_deduction": 186,
+        "executive_summary": "..."
+      },
+      "code_quality": {
+        "score": 69,
+        "max_score": 200,
+        "data_status": "READY",
+        "total_deduction": 131,
+        "executive_summary": "..."
+      },
+      "dependencies": {
+        "score": 221,
+        "max_score": 400,
+        "data_status": "READY",
+        "total_deduction": 179,
+        "executive_summary": "..."
+      }
+    },
+    "priorities": {
+      "security": { "A": [], "B": [], "C": [] },
+      "code_quality": {},
+      "dependencies": {}
+    }
+  }
+}
+```
+
+**Response — plan does not include Code Score or score not yet generated:**
+
+Both edge cases return the same object shape — check `description` for the reason:
+```json
+{
+  "code_score": {
+    "description": "Full data access requires a paid plan (verification-only plans are not included). Please upgrade to continue.",
+    "executive_summary": null,
+    "sections": {},
+    "priorities": {}
+  }
+}
+```
+```json
+{
+  "code_score": {
+    "description": "The Code Score has not been generated yet for this scope.",
+    "executive_summary": null,
+    "sections": {},
+    "priorities": {}
+  }
+}
+```
+
+These are **not** errors — they use `isError: false` and the normal response shape. The score may not yet be generated on a first analysis run; poll `get-the-code-score` after `get-code-vault-summary` shows `ready`.
+
+---
+
 ## Error Responses
 
 All errors follow this format:
@@ -943,3 +1283,67 @@ Free tier LOC cap exceeded:
 ```
 
 **Note:** For timeout errors (504), retry the request with exponential backoff. The server may be scaling up from zero instances.
+
+---
+
+### Errors from the Full Data Access tools
+
+The full data access tools (`get-security-issues`, `get-code-smells`, `get-git-history`, `get-contributors`, `get-components`, `get-code-iq-automated-queries`, `get-the-code-score`) return errors as a normal `tools/call` result with `isError: true` — not the bare `{"error": {...}}` shape above. The `content[0].text` JSON contains the error fields.
+
+#### RESTRICTED_ACCESS (403) — plan does not include full data access
+
+Returned by all 7 tools when the team's plan does not include full data access. Verification-only (VerifyYourCode) plans are not included.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "isError": true,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"code\":\"RESTRICTED_ACCESS\",\"status\":403,\"message\":\"Full data access requires a paid plan (verification-only plans are not included). Please upgrade to continue.\",\"details\":{\"tier\":\"free\",\"upgrade_url\":\"https://app.thecoderegistry.com\"}}"
+      }
+    ]
+  },
+  "id": 20
+}
+```
+
+#### INVALID_SCOPE (400) — project_id and vault_id both given, or neither given
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "isError": true,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"code\":\"INVALID_SCOPE\",\"status\":400,\"message\":\"Provide exactly one of project_id or vault_id.\"}"
+      }
+    ]
+  },
+  "id": 25
+}
+```
+
+#### NOT_FOUND (404) — analysis_key "code_score" requested on get-code-iq-automated-queries
+
+`analysis_key: "code_score"` is not a valid key for `get-code-iq-automated-queries`. Use `get-the-code-score` instead.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "isError": true,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"code\":\"NOT_FOUND\",\"status\":404,\"message\":\"The analysis key 'code_score' is not available via get-code-iq-automated-queries. Use get-the-code-score to retrieve The Code Score.\"}"
+      }
+    ]
+  },
+  "id": 25
+}
+```

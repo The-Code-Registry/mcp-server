@@ -6,7 +6,7 @@
     "url": "https://github.com/The-Code-Registry/mcp-server",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.0.2",
   "remotes": [
     {
       "type": "streamable-http",

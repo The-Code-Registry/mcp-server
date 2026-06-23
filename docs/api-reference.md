@@ -693,6 +693,297 @@ Returns URLs to downloadable PDF reports.
 
 ---
 
+## Full Data Access
+
+The following tools expose raw analysis data and are available on paid plans. Verification-only (VerifyYourCode) plans do not include access to these tools. Each tool requires **exactly one of** `project_id` or `vault_id` — passing both or neither returns a `400 INVALID_SCOPE` error. When called with `project_id`, findings from all vaults in the project are aggregated and each item includes a `vault_name` field.
+
+The authoritative tool schemas are always available live via `tools/list` against the MCP endpoint. Note that `schemas/mcp-tools.json` in this repository currently only covers `create_account` and does not reflect the full deployed tool set — treat the live `tools/list` response as the source of truth.
+
+**Pagination convention (applies to all tools that support it):**
+- `limit` — number of items to return (default: `50`, max: `200`)
+- `offset` — zero-based offset for pagination (default: `0`)
+
+---
+
+### get-security-issues
+Returns deduplicated security findings for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `severity` (array of strings, optional) — filter by severity level, e.g. `["ERROR", "WARNING"]`
+- `file` (string, optional) — substring match against file path
+- `check_id` (string, optional) — exact match on check identifier
+- `status` (string, optional) — filter by triage status
+- `tag` (string, optional) — filter by tag
+- `issue_id` (string, optional) — retrieve a specific issue by ID
+- `limit` / `offset` (integer, optional) — pagination
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-security-issues",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "severity": ["ERROR"],
+      "limit": 10
+    }
+  },
+  "id": 20
+}
+```
+
+**Response:**
+```json
+{
+  "issues": [
+    {
+      "id": "1859c7c2-d04c-4e68-9378-bf0724c5aec8",
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "check_id": "python.lang.security.audit.subprocess-shell-true.subprocess-shell-true",
+      "file": "function/activity_analyse.py",
+      "line": 173,
+      "severity": "ERROR",
+      "issue_type": "code",
+      "message": "Found 'subprocess' function 'check_output' with 'shell=True'...",
+      "code_snippet": "        output = subprocess.check_output(codeclimate_cmd, shell=True)\n",
+      "created_at": "2024-08-06T10:27:31",
+      "updated_at": "2024-08-06T10:27:31",
+      "triage": {
+        "status": "first_viewed",
+        "external_id": null,
+        "external_ref": null,
+        "external_url": null
+      },
+      "tags": []
+    }
+  ],
+  "total": 47,
+  "limit": 10,
+  "offset": 0
+}
+```
+
+**Notes:**
+- When called with `project_id`, each issue includes `vault_name` instead of `vault_id`.
+
+---
+
+### get-code-smells
+Returns code smell findings for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `issue_type` (string, optional) — filter by smell type
+- `file` (string, optional) — substring match against file path
+- `issue_id` (string, optional) — retrieve a specific issue by ID
+- `limit` / `offset` (integer, optional) — pagination
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-smells",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "limit": 50
+    }
+  },
+  "id": 21
+}
+```
+
+---
+
+### get-git-history
+Returns commit history for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `author` (string, optional) — filter by author name or email
+- `branch` (string, optional) — filter by branch name
+- `date_from` (string, optional) — ISO 8601 start date
+- `date_to` (string, optional) — ISO 8601 end date
+- `limit` / `offset` (integer, optional) — pagination
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-git-history",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "date_from": "2024-01-01",
+      "limit": 50
+    }
+  },
+  "id": 22
+}
+```
+
+---
+
+### get-contributors
+Returns aggregated contributor statistics for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `author` (string, optional) — filter by author name or email
+- `branch` (string, optional) — filter by branch name
+- `date_from` (string, optional) — ISO 8601 start date
+- `date_to` (string, optional) — ISO 8601 end date
+- `limit` / `offset` (integer, optional) — pagination
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-contributors",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 23
+}
+```
+
+---
+
+### get-components
+Returns detected open-source and CMS components for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `name` (string, optional) — substring match on component name
+- `vendor` (string, optional) — substring match on vendor name
+- `url` (string, optional) — substring match on component URL
+- `only_outdated` (boolean, optional) — return only outdated components
+- `sort_by_size` (boolean, optional) — sort results by size
+- `limit` / `offset` (integer, optional) — pagination
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-components",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "only_outdated": true
+    }
+  },
+  "id": 24
+}
+```
+
+---
+
+### get-code-iq-automated-queries
+Returns trimmed Code IQ automated analyses (architecture, scalability, EOL, AI functionality, and more) for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+- `analysis_key` (string, optional) — return a single analysis by key; omit to return all
+
+**Example — all analyses:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-iq-automated-queries",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 25
+}
+```
+
+**Example — single analysis:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-code-iq-automated-queries",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000",
+      "analysis_key": "project_architecture"
+    }
+  },
+  "id": 26
+}
+```
+
+**Notes:**
+- `analysis_key: "code_score"` is **not valid** for this tool — it returns a `404` pointing to `get-the-code-score` instead. Use `get-the-code-score` for The Code Score.
+
+---
+
+### get-the-code-score
+Returns The Code Score — a 1,000-point composite score covering security, code quality, and dependencies — for a project or vault.
+
+**Authentication:** Required (paid plan)
+
+**Request Fields:**
+- `project_id` (string) — aggregate across all vaults in this project
+- `vault_id` (string) — single vault
+- `api_key` (string, optional) — alternative to `X-API-Key` header
+
+**Example:**
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "get-the-code-score",
+    "arguments": {
+      "vault_id": "990e8400-e29b-41d4-a716-446655440000"
+    }
+  },
+  "id": 27
+}
+```
+
+**Notes:**
+- If the score has not been generated yet, or the plan does not include it, the response returns an empty `sections` and `priorities` with an explanatory `description`. See `docs/response-schemas.md` for the exact shape of both edge cases.
+
+---
+
 ## Error Codes
 
 All errors follow this format:
