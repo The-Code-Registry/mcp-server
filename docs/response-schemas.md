@@ -855,7 +855,21 @@ These tools require a paid plan. Verification-only (VerifyYourCode) plans are no
         "external_ref": null,
         "external_url": null
       },
-      "tags": []
+      "tags": [],
+      "cwe": ["CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"],
+      "owasp": ["A01:2017 - Injection", "A03:2021 - Injection", "A05:2025 - Injection"],
+      "package_name": null,
+      "package_version": null,
+      "package_ecosystem": null,
+      "lockfile_path": null,
+      "advisory_id": null,
+      "cve_id": null,
+      "ghsa_id": null,
+      "cvss_score": null,
+      "cvss_version": null,
+      "cvss_vector": null,
+      "fix_versions": null,
+      "reachability": null
     }
   ],
   "total": 47,
@@ -865,6 +879,33 @@ These tools require a paid plan. Verification-only (VerifyYourCode) plans are no
 ```
 
 When called with `project_id`, each issue includes `vault_name` (string) in place of `vault_id`.
+
+**Classification and advisory fields.** Every issue always includes the keys below, set to `null` when empty. Code findings (`issue_type: "code"`) only carry `cwe` and `owasp`. Dependency findings (`issue_type: "dependency"`) may carry any of them, and `advisory_id` is always set on new scans. Issues from scans that ran before these fields existed have `null` for all of them.
+
+| Field | Type | Notes |
+|---|---|---|
+| `cwe` | array of strings \| null | e.g. `["CWE-918: Server-Side Request Forgery (SSRF)"]` |
+| `owasp` | array of strings \| null | Tagged against several OWASP editions at once |
+| `package_name` | string \| null | e.g. `axios` |
+| `package_version` | string \| null | Installed version |
+| `package_ecosystem` | string \| null | `npm`, `pypi`, `composer`, `maven`, `gem`, `nuget`, `gomod`, ... |
+| `lockfile_path` | string \| null | e.g. `package-lock.json` |
+| `advisory_id` | string \| null | Primary ID: the CVE, or the GHSA if there is no CVE. Count distinct `advisory_id` values for unique vulnerabilities |
+| `cve_id` | string \| null | `null` for GHSA-only advisories |
+| `ghsa_id` | string \| null | |
+| `cvss_score` | number \| null | e.g. `9.8`. A separate scale from `severity`; the two often disagree |
+| `cvss_version` | string \| null | `3.0`, `3.1` or `4.0` |
+| `cvss_vector` | string \| null | e.g. `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H` |
+| `fix_versions` | array of objects \| null | e.g. `[{"axios": "1.8.2"}]`, one object per fixed version |
+| `reachability` | string \| null | Dependency findings only; see below |
+
+`reachability` values, ordered by risk:
+
+- `reachable`: the codebase contains a usage matching the advisory's vulnerable-code pattern. This is a pattern match, not a traced execution path, and does not prove exploitability.
+- `always_reachable`: vulnerable just by being installed; upgrading is the only fix.
+- `conditional`: usage matched, but exploitation also needs conditions the scanner can't check (OS, config...). Needs manual review.
+- `unreachable`: no use of the vulnerable code found. Usage through transitive dependencies and in vendor/node_modules is not checked, so this does **not** mean safe.
+- `not_analysed`: no reachability rule exists for this advisory. It does **not** mean safe.
 
 ---
 
