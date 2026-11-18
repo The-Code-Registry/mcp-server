@@ -1,5 +1,12 @@
 # Changelog
 
+# Changelog
+
+## [1.0.3] - 2026-11-18
+
+### Added
+- `get-security-issues` now returns `cwe`, `owasp`, `package_name`, `package_version`, `package_ecosystem`, `lockfile_path`, `advisory_id`, `cve_id`, `ghsa_id`, `cvss_score`, `cvss_version`, `cvss_vector`, `fix_versions` and `reachability` on every issue (`null` when not set). See [response schemas](docs/response-schemas.md#get-security-issues).
+
 ## [1.0.2] - 2026-06-23
 
 ### Added

@@ -761,7 +761,21 @@ Returns deduplicated security findings for a project or vault.
         "external_ref": null,
         "external_url": null
       },
-      "tags": []
+      "tags": [],
+      "cwe": ["CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"],
+      "owasp": ["A01:2017 - Injection", "A03:2021 - Injection", "A05:2025 - Injection"],
+      "package_name": null,
+      "package_version": null,
+      "package_ecosystem": null,
+      "lockfile_path": null,
+      "advisory_id": null,
+      "cve_id": null,
+      "ghsa_id": null,
+      "cvss_score": null,
+      "cvss_version": null,
+      "cvss_vector": null,
+      "fix_versions": null,
+      "reachability": null
     }
   ],
   "total": 47,
